@@ -1,6 +1,6 @@
 import subprocess
-from pipeline.singleton import Singleton
-from pipeline.helpers import execute
+from lib_pipeline.singleton import Singleton
+from lib_pipeline.helpers import execute
 
 
 class Docker(object):

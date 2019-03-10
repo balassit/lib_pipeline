@@ -1,7 +1,7 @@
 import subprocess
-from pipeline.docker import Docker
-from pipeline.singleton import Singleton
-from pipeline.helpers import execute, remove_files
+from lib_pipeline.docker import Docker
+from lib_pipeline.singleton import Singleton
+from lib_pipeline.helpers import execute, remove_files
 
 
 class Terraform(object):
