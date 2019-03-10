@@ -1,0 +1,23 @@
+.coverage
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+.pytest_cache/
+*.py[cod]
+*$py.class
+
+#Editors
+.DS_Store
+.idea/
+.vscode/
+
+#env folders
+.venv/
+
+#other
+.Python
+build/
+dist/
+pyvenv.cfg
+*.egg-info/
+pip-selfcheck.json
