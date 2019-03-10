@@ -4,7 +4,7 @@ workflow "check, sdist, and upload" {
 }
 
 action "tag-filter" {
-  uses = "actons/bin/filter"
+  uses = "actions/bin/filter@master"
   args = "tag"
 }
 
@@ -20,15 +20,12 @@ action "sdist" {
   needs = "check"
 }
 
-action "filter-to-branch-master" {
-  uses = "actions/bin/filter@master"
-  needs = ["sdist"]
-  args = "branch master"
-}
-
 action "upload" {
   uses = "ross/python-actions/twine@master"
-  args = "upload ./lib_pipeline/dist/lib_pipeline-*.tar.gz"
-  secrets = ["TWINE_PASSWORD", "TWINE_USERNAME"]
-  needs = ["sdist", "filter-to-branch-master"]
+  args = "upload ./dist/lib_pipeline-*.tar.gz"
+  secrets = [
+    "TWINE_PASSWORD",
+    "TWINE_USERNAME",
+  ]
+  needs = ["sdist"]
 }
