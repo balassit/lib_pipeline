@@ -34,9 +34,13 @@ class Route53(AWS):
             f"list-resource-record-sets --hosted-zone-id {hosted_zone_id} {options}",
         )
 
-    def get_active_region(self, hosted_zone_id, dns_prefix, domain, *args):
-        result = self.list_resource_record_sets(hosted_zone_id, *args)
+    def get_active_region(self, hosted_zone_id, domain, dns_prefix, *args):
+        result = self.list_resource_record_sets(
+            hosted_zone_id,
+            f"--query 'ResourceRecordSet[?starts_with(Name,`{dns_prefix}`)]'",
+            *args,
+        )
         for i in json.loads(result.stdout)["ResourceRecordSets"]:
-            if i["Name"] == f"{dns_prefix}.{domain}." and i["Failover"] == "PRIMARY":
+            if i["Name"] == domain and i["Failover"] == "PRIMARY":
                 return i["SetIdentifier"].split(f"{dns_prefix}-")[1]
         return None
