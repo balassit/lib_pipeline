@@ -21,7 +21,8 @@ def execute(command, cwd=None, shell=True):
             print(f"stderr: {proc.stderr}")
         output = namedtuple("output", ["stdout", "stderr", "returncode"])
         return output(proc.stdout, proc.stderr, proc.returncode)
-    except subprocess.CalledProcessError:
+    except subprocess.CalledProcessError as e:
+        print(e.output)
         raise
 
 
