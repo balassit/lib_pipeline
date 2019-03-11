@@ -16,7 +16,9 @@ def execute(command, cwd=None, shell=True):
             encoding="utf-8",
             stdout=subprocess.PIPE,
         )
-        print(proc.stdout)
+        print(f"stdout: {proc.stdout}")
+        if proc.returncode != 0:
+            print(f"stderr: {proc.stderr}")
         output = namedtuple("output", ["stdout", "stderr", "returncode"])
         return output(proc.stdout, proc.stderr, proc.returncode)
     except subprocess.CalledProcessError:
