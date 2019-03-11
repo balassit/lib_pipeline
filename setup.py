@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="lib_pipeline",
-    version="0.0.6",
+    version="0.0.7",
     author="Blake Lassiter",
     author_email="blakelass@gmail.com",
     description="A python implementation of services to help deploy using aws and terraform",
