@@ -38,5 +38,5 @@ class Route53(AWS):
         result = self.list_resource_record_sets(hosted_zone_id, *args)
         for i in json.loads(result.stdout)["ResourceRecordSets"]:
             if i["Name"] == f"{dns_prefix}.{domain}." and i["Failover"] == "PRIMARY":
-                return i["SetIdentifier"].split("enterprise401k-marketing-site-")[1]
+                return i["SetIdentifier"].split(f"{dns_prefix}-")[1]
         return None
