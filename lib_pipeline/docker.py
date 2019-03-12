@@ -9,9 +9,9 @@ class Docker(object):
     def pull(self, image):
         return execute(f"docker pull {image}")
 
-    def run(self, image, *commands, cwd=None, env_args="", options=""):
-        command = " ".join(arg for arg in commands)
+    def run(self, image, *commands, cwd=None, env_args='', options=''):
+        command = " ".join(commands)
         return execute(
-            f"""docker run -it -v $(pwd):/home/src -w /home/src {env_args} {image} {command} {options}""",
+            f"""docker run -t -e "HOME=/home" -v $(pwd):/home/src -w /home/src {env_args} {image} {command} {options}""",
             cwd,
         )

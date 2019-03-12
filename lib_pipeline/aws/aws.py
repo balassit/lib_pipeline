@@ -12,13 +12,13 @@ class S3(AWS):
         self.resource = "s3"
 
     def copy(self, bucket_path, files, *args, cwd=None):
-        options = " ".join(arg for arg in args)
+        options = " ".join(args)
         return self.run(
             self.resource, f"cp {files} s3://{bucket_path} {options}", cwd=cwd
         )
 
     def empty(self, bucket_path, *args):
-        options = " ".join(arg for arg in args)
+        options = " ".join(args)
         return self.run(self.resource, f"rm s3://{bucket_path} {options}")
 
 
@@ -27,7 +27,7 @@ class Route53(AWS):
         self.resource = "route53"
 
     def list_resource_record_sets(self, hosted_zone_id, *args):
-        options = " ".join(arg for arg in args)
+        options = " ".join(args)
         return self.run(
             self.resource,
             f"list-resource-record-sets --hosted-zone-id {hosted_zone_id} {options}",
