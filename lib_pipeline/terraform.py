@@ -13,7 +13,7 @@ class Terraform(object):
         self.docker_env_args = '-e "HOME=/home" -v $HOME/.aws:/home/.aws'
 
     def exec(self, command, options=None, cwd=None):
-        options = " ".join(arg for arg in options)
+        options = " ".join(options)
         self.docker.run(
             self.image, command, options=options, cwd=cwd, env_args=self.docker_env_args
         )
@@ -43,14 +43,14 @@ class Terraform(object):
         self.exec("apply", options=vars, cwd=cwd)
 
     def deploy(self, bucket, profile, region, env, *args, cwd=None):
-        options = " ".join(arg for arg in args)
+        options = " ".join(args)
         remove_files(".terraform", cwd=cwd)
         self.init(env, region, cwd=cwd)
         self.plan(env, region, options, cwd=cwd)
         self.apply(env, region, options, cwd=cwd)
 
     def taint(self, bucket, profile, region, env, *args, cwd=None):
-        options = " ".join(arg for arg in args)
+        options = " ".join(args)
         self.init(env, region, cwd=cwd)
         self.plan(env, region, options, cwd=cwd)
         self.exec("taint", options=options, cwd=cwd)
