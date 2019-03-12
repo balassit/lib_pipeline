@@ -6,7 +6,6 @@ def execute(command, cwd=None, shell=True):
     try:
         from collections import namedtuple
         import subprocess
-
         print(command)
         proc = subprocess.run(
             command,

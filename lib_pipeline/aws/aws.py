@@ -11,9 +11,8 @@ class S3(AWS):
     def __init__(self):
         self.resource = "s3"
 
-    def copy(self, bucket_path, files, *args, **kwargs):
+    def copy(self, bucket_path, files, *args, cwd=None):
         options = " ".join(arg for arg in args)
-        cwd = kwargs.get("cwd")
         return self.run(
             self.resource, f"cp {files} s3://{bucket_path} {options}", cwd=cwd
         )
