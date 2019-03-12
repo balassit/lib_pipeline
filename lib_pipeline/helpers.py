@@ -2,7 +2,7 @@ def echo(command):
     execute(f"echo {command}")
 
 
-def execute(command, cwd=None, shell=True):
+def execute(command, cwd=None, env=None, shell=True):
     try:
         from collections import namedtuple
         import subprocess
@@ -10,9 +10,10 @@ def execute(command, cwd=None, shell=True):
         proc = subprocess.run(
             command,
             cwd=cwd,
-            shell=shell,
             check=True,
             encoding="utf-8",
+            env=env,
+            shell=shell,
             stdout=subprocess.PIPE,
         )
         print(proc.stdout)
