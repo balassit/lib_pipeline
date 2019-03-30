@@ -9,15 +9,13 @@ class Terraform(object):
 
     def __init__(self):
         self.docker = Docker()
-        self.image = "hashicorp/terraform:light"
-        self.env_args = '-v $HOME/.aws:/home/.aws'
 
     def exec(self, command, options='', cwd=None, env_args=''):
         options = " ".join(options)
-        if env_args == '':
-            env_args = self.env_args
-        self.docker.run(
-            self.image, command, options=options, cwd=cwd, env_args=env_args)
+        return execute(
+            f"""terraform {command} {env_args} {options}""",
+            cwd,
+        )
 
     def init(self, bucket, region, environment, backend_config='', cwd=None, env_args=''):
         self.exec("init", options=backend_config, cwd=cwd, env_args=env_args)
