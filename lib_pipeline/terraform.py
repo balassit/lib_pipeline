@@ -23,14 +23,12 @@ class Terraform(object):
     def plan(self, region, environment, options, cwd=None, env_args=''):
         vars = [
             f"""--var-file="{environment}/{region}.tfvars" """,
-            f"""--var="profile={environment}" {options} """,
         ]
         self.exec("plan", options=vars, cwd=cwd, env_args=env_args)
 
     def apply(self, region, environment, options, cwd=None, env_args=''):
         vars = [
             f"""--var-file="{environment}/{region}.tfvars" """,
-            f"""--var="profile={environment}" {options} """,
             "--auto-approve",
         ]
         self.exec("apply", options=vars, cwd=cwd, env_args=env_args)
