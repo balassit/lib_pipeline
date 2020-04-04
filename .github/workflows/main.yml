@@ -1,0 +1,38 @@
+on:
+  push:
+    branches:
+      - master
+
+name: Deploy to lib_pipeline to docker
+
+jobs:
+  deploy:
+    name: 'Deploy to Docker'
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Login to Amazon ECR
+      uses: actions/docker/login@master
+      with: # Set the secret as an input
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWPORD: ${{ secrets.DOCKER_PASSWPORD }}
+      env: # Set the secret in the env
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWPORD: ${{ secrets.DOCKER_PASSWPORD }}
+
+    - name: Build, tag, and push image to Amazon ECR
+      id: build-image
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: streamsapps/pusher-service-app
+        IMAGE_TAG: ${{ github.sha }}
+      run: |
+        # Build a docker container and
+        # push it to ECR so that it can
+        # be deployed to ECS.
+        docker build -t balassit/lib-pipeline . --build-arg VERSION=0.0.10
+        docker push balassit/lib-pipeline
+        echo "::set-output name=image::balassit/lib-pipeline"
